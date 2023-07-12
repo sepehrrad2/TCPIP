@@ -18,13 +18,14 @@
  * =====================================================================================
  */
 
-//#ifndef __GRAPH__
-//#define __GRAPH__
+#ifndef __GRAPH__
+#define __GRAPH__
 
 #include <list>
 #include <string>
 #include <vector>
 #include <assert.h>
+#include "net.h"
 //#include "gluethread/glthread.h"
 
 using namespace std;
@@ -42,6 +43,7 @@ public:
     string if_name;
     node_ *att_node;
     link_ *link;
+    intf_nw_props_ intf_nw_props;
 };
 
 class link_ {
@@ -55,16 +57,13 @@ class node_ {
 public:
     string node_name;
     interface_ *intf[MAX_INTF_PER_NODE];
-    //vector<interface_ *> intf(MAX_INTF_PER_NODE);
-    //glthread_t graph_glue;
+    node_nw_prop_ node_nw_prop;
 };
-
-//GLTHREAD_TO_STRUCT(graph_glue_to_node, node_, graph_glue);
 
 class graph_{
 public:
     string topology_name;
-    std::list<node_> node_list; 
+    std::list<node_ *> node_list; 
 };
 
 node_ * create_graph_node(graph_ &graph, string node_name);
@@ -90,6 +89,10 @@ get_nbr_node(interface_ *interface){
     else
         return link->intf1.att_node;
 }
+interface_ *
+get_node_if_by_name(node_& node, string if_name);
+
+node_ get_node_by_node_name(graph_& graph, string node_name);
 
 static int
 get_node_intf_available_slot(node_ &node){
@@ -104,9 +107,9 @@ get_node_intf_available_slot(node_ &node){
 }
 
 /*Display Routines*/
-void dump_graph(graph_ *graph);
-void dump_node(node_ *node);
-void dump_interface(interface_ *interface);
+void dump_graph(graph_ &graph);
+void dump_node(node_ &node);
+void dump_interface(interface_ & interface);
 
 
-//#endif /* __NW_GRAPH_ */
+#endif /* __NW_GRAPH_ */
