@@ -1,36 +1,3 @@
-/*
- * =====================================================================================
- *
- *       Filename:  net.c
- *
- *    Description:  This file contains general pupose Networking routines
- *
- *        Version:  1.0
- *        Created:  Wednesday 18 September 2019 08:36:50  IST
- *       Revision:  1.0
- *       Compiler:  gcc
- *
- *         Author:  Er. Abhishek Sagar, Networking Developer (AS), sachinites@gmail.com
- *        Company:  Brocade Communications(Jul 2012- Mar 2016), Current : Juniper Networks(Apr 2017 - Present)
- *        
- *        This file is part of the NetworkGraph distribution (https://github.com/sachinites).
- *        Copyright (c) 2017 Abhishek Sagar.
- *        This program is free software: you can redistribute it and/or modify
- *        it under the terms of the GNU General Public License as published by  
- *        the Free Software Foundation, version 3.
- *
- *        This program is distributed in the hope that it will be useful, but 
- *        WITHOUT ANY WARRANTY; without even the implied warranty of 
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
- *        General Public License for more details.
- *
- *        You should have received a copy of the GNU General Public License 
- *        along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
- * =====================================================================================
- */
-
-
 #include <memory.h>
 #include "utils.h"
 #include <stdio.h>
@@ -108,16 +75,13 @@ void dump_intf_props(interface_ *interface){
     dump_interface(*interface);
 
     if(interface->intf_nw_props.is_ipadd_config){
-        printf("\t IP Addr = %s/%u", IF_IP(interface), interface->intf_nw_props.mask);
+        cout << " IP Addr = " << IF_IP(interface) << interface->intf_nw_props.mask << endl;
     }
     else{
-         printf("\t IP Addr = %s/%u", "Nil", 0);
+         cout <<"IP Addr = Nil" << endl;
     }
 
-    printf("MAC : %u:%u:%u:%u:%u:%u\n", 
-        IF_MAC(interface)[0], IF_MAC(interface)[1],
-        IF_MAC(interface)[2], IF_MAC(interface)[3],
-        IF_MAC(interface)[4], IF_MAC(interface)[5]);
+    cout << " MAC : " << IF_MAC(interface)[0] << IF_MAC(interface)[1] << IF_MAC(interface)[2] <<  IF_MAC(interface)[3] << IF_MAC(interface)[4] << IF_MAC(interface)[5] << endl;
 }
 
 void dump_nw_graph(graph_ & graph){

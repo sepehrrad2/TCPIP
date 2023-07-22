@@ -57,6 +57,8 @@ class node_ {
 public:
     string node_name;
     interface_ *intf[MAX_INTF_PER_NODE];
+    unsigned int udp_port_number;
+    int udp_sock_fd;
     node_nw_prop_ node_nw_prop;
 };
 

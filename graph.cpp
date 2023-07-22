@@ -1,7 +1,7 @@
 #include "graph.h"
 #include <iostream>
 
-
+extern void init_udp_socket(node_ *node);
 
 graph_ * create_new_graph(std::string topology_name){
     graph_* g = new graph_();
@@ -13,6 +13,7 @@ node_ * create_graph_node(graph_& graph, string node_name){
     node_ * N = new node_();
     N->node_name = node_name;
     graph.node_list.push_back(N);
+    init_udp_socket(N);
     return N;
 
 }
@@ -35,6 +36,10 @@ void insert_link_between_two_nodes(node_& node1,
     node1.intf[nodes_empty_slot] = &L->intf1;
     nodes_empty_slot = get_node_intf_available_slot(node2);
     node2.intf[nodes_empty_slot] = &L->intf2;
+    interface_assign_mac_address(&L->intf1);
+    interface_assign_mac_address(&L->intf2);
+    init_intf_nw_prop(L->intf1.intf_nw_props);
+    init_intf_nw_prop(L->intf2.intf_nw_props);
 }
 
 interface_ * get_node_if_by_name(node_& node, string if_name){

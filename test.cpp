@@ -1,8 +1,12 @@
 #include "graph.h"
 #include "net.h"
 #include <iostream>
+#include "comm.h"
+#include <chrono>   // For std::chrono::milliseconds
+#include <thread>   // For std::this_thread::sleep_for
+		    //
 //using namespace std;
-
+extern void network_start_pkt_receiver_thread(graph_* graph);
 int main(){
     graph_ * topo = create_new_graph("Hello");
     node_ * N1 = create_graph_node( *topo, "first");
@@ -29,6 +33,18 @@ int main(){
     a = node_set_intf_ip_address(*N3, "eth3/1", "40.1.1.2", 24);
 
     dump_nw_graph(*topo);
+
+    network_start_pkt_receiver_thread(topo);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+    /*Testing communication*/
+    node_ node = get_node_by_node_name(*topo, "first");
+    char msg[] = "Hello";
+    interface_ *oif = get_node_if_by_name(node, "eth1/2");
+    send_pkt_out(msg, strlen(msg), oif);
+    //assert(oif);
+    //send_pkt_out(data, strlen(data), oif);
     /*interface_ * intf =  get_node_if_by_name(*N1, "eth0/1");
     node_ b = get_node_by_node_name(*topo, "first"); 
     dump_graph(*topo);
